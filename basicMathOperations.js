@@ -52,3 +52,11 @@ const opposite = number => number < 0 ? Math.abs(number) : number - 2 * (Math.ab
 
 //Best solution
 const opposite = number => -number;
+
+/*
+
+4. Simple, remove the spaces from the string, then return the resultant string.
+
+*/
+
+const noSpace = x => x.replace(/\W/g, "");
