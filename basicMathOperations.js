@@ -23,7 +23,6 @@ Calculate the row sums of this triangle from the row index (starting at index 1)
 */
 
 //My solution:
-
 const rowSumOddNumbers = rowNum => {
   let triangle = [];
   let oddInts = [-1];
@@ -40,5 +39,16 @@ const rowSumOddNumbers = rowNum => {
 };
 
 //Best solution:
-
 const rowSumOddNumbers = n => Math.pow(n, 3);
+
+/*
+
+3. Very simple, given a number, find its opposite.
+
+*/
+
+//My solution
+const opposite = number => number < 0 ? Math.abs(number) : number - 2 * (Math.abs(number));
+
+//Best solution
+const opposite = number => -number;
