@@ -84,3 +84,28 @@ const songDecoder = song => {
 function songDecoder(song){
   return song.replace(/(WUB)+/g," ").trim()
 }
+
+/*
+
+6. Given an array of numbers (a list in groovy), determine whether the sum of all of the numbers is odd or even.
+
+Give your answer in string format as 'odd' or 'even'.
+
+If the input array is empty consider it as: [0] (array with a zero).
+
+*/
+
+//My solution
+function oddOrEven(array) {
+  if(array.length > 0) {
+    const dividedSum = array.reduce((accumulator, currentValue) => accumulator + currentValue) / 2;
+    return dividedSum.toString().includes(".") ? 'odd' : 'even';
+  } else {
+    return 'even';
+  };
+};
+
+//Best solution
+function oddOrEven(arr) {
+  return arr.reduce((a,b)=>a+b,0) % 2 ? 'odd' : 'even';
+};
