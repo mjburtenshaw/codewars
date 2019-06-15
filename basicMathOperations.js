@@ -125,3 +125,25 @@ const minMax = arr => [Math.min.apply(Math, arr), Math.max.apply(Math, arr)];
 
 //Best solution
 const minMax = arr => [Math.min(Math, arr), Math.max(Math, arr)];
+
+/*
+
+8. Simple, given a string of words, return the length of the shortest word(s).
+
+String will never be empty and you do not need to account for different data types.
+
+*/
+
+//My solution
+function findShort(s){
+  let shortestLength = s.split(" ")[0].length;
+  for (let string of s.split(" ")) {
+    if (string.length < shortestLength) shortestLength = string.length;
+  };
+  return shortestLength;
+};
+
+//Best solution
+function findShort(s){
+  return Math.min.apply(null, s.split(' ').map(w => w.length));
+}
