@@ -187,3 +187,32 @@ function isValidWalk(walk) {
 
 //Best solution
 //Unknown, kata test cases were coded incorrectly.
+
+/*
+
+10. Your task is to make function, which returns the sum of a sequence of integers.
+The sequence is defined by 3 non-negative values: begin, end, step.
+If begin value is greater than the end, function should returns 0
+
+*/
+
+//My solution
+const sequenceSum = (begin, end, step) => {
+  if (begin <= end) {
+    let valuesToSum = [begin];
+    for (var i = begin; i <= end; i += step) {
+      if (i + step <= end) valuesToSum.push(i + step);
+    };
+    return valuesToSum.reduce((previousValue, currentValue) => previousValue + currentValue);
+  } else {
+    return 0;
+  };
+};
+
+//Best solution
+const sequenceSum = (begin, end, step) => {
+  if (begin > end) {
+    return 0;
+  }
+  return begin + sequenceSum(begin + step, end, step);
+};
