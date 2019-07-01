@@ -216,3 +216,26 @@ const sequenceSum = (begin, end, step) => {
   }
   return begin + sequenceSum(begin + step, end, step);
 };
+
+/*
+
+11. Your goal in this kata is to implement a difference function, which subtracts one list from another and returns the result.
+It should remove all values from list a, which are present in list b.
+
+*/
+
+//My solution
+const array_diff = (list1, list2) => {
+  let result = [];
+  for (let i in list1) {
+    let matchFound = false;
+    for (let j in list2) if (list1[i] === list2[j]) matchFound = true;
+    if (!matchFound) result.push(list1[i]);
+  };
+  return result;
+};
+
+//Best solution
+function array_diff(a, b) {
+  return a.filter(function(x) { return b.indexOf(x) == -1; });
+}
