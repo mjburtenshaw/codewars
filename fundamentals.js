@@ -239,3 +239,40 @@ const array_diff = (list1, list2) => {
 function array_diff(a, b) {
   return a.filter(function(x) { return b.indexOf(x) == -1; });
 }
+
+/*
+
+12. Build Tower by the following given argument:
+number of floors (integer and always greater than 0).
+Tower block is represented as *
+
+*/
+
+//My solution
+function towerBuilder(nFloors) {
+  let tower = [];
+  for (let i = 1; i <= nFloors; i++) {
+    let floor = "*";
+    for (let j = 1; j < nFloors; j++) {
+      floor = floor.split("");
+      if (j < i) {
+        floor.push("*");
+        floor.unshift("*");
+      } else {
+        floor.push(" ");
+        floor.unshift(" ");
+      };
+      floor = floor.join("");
+    };
+    tower.push(floor);
+  };
+  return tower;
+};
+
+//Best solution
+function towerBuilder(n) {
+  return Array.from({length: n}, function(v, k) {
+    const spaces = ' '.repeat(n - k - 1);
+    return spaces + '*'.repeat(k + k + 1) + spaces;
+  });
+}
