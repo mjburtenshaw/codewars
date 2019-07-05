@@ -276,3 +276,49 @@ function towerBuilder(n) {
     return spaces + '*'.repeat(k + k + 1) + spaces;
   });
 }
+
+/*
+
+13. Deoxyribonucleic acid (DNA) is a chemical found in the nucleus of cells and carries the "instructions" for the development and functioning of living organisms.
+In DNA strings, symbols "A" and "T" are complements of each other, as "C" and "G". You have function with one side of the DNA (string, except for Haskell); you need to get the other complementary side. DNA strand is never empty or there is no DNA at all (again, except for Haskell).
+
+*/
+
+//My solution
+function DNAStrand(dna){
+  let missingPiece = [];
+  dna = dna.split("");
+  for (let i in dna) {
+    switch(dna[i]) {
+      case "A":
+        missingPiece.push("T");
+        break;
+      case "T":
+        missingPiece.push("A");
+        break;
+      case "C":
+        missingPiece.push("G");
+        break;
+      case "G":
+        missingPiece.push("C");
+        break;
+      default:
+        //do nothing;
+    };
+  };
+  return missingPiece.join("");
+};
+
+//Best solution
+function DNAStrand(dna) {
+  return dna.replace(/./g, function(c) {
+    return DNAStrand.pairs[c]
+  })
+}
+
+DNAStrand.pairs = {
+  A: 'T',
+  T: 'A',
+  C: 'G',
+  G: 'C',
+}
