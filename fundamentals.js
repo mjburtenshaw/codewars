@@ -397,3 +397,74 @@ function squareDigits(num){
 function squareDigits(num){
   return Number(('' + num).split('').map(function (val) { return val * val;}).join(''));
 }
+
+/*
+
+17. Create a function that returns the name of the winner in a fight between two fighters.
+Each fighter takes turns attacking the other and whoever kills the other first is victorious. Death is defined as having health <= 0.
+Each fighter will be a Fighter object/instance. See the Fighter class below in your chosen language.
+Both health and damagePerAttack (damage_per_attack for python) will be integers larger than 0. You can mutate the Fighter objects.
+Example:
+function Fighter(name, health, damagePerAttack) {
+  this.name = name;
+  this.health = health;
+  this.damagePerAttack = damagePerAttack;
+  this.toString = function() { return this.name; }
+}
+
+*/
+
+//My solution DID NOT PASS TESTS
+function Fighter(name, health, damagePerAttack) {
+  this.name = name;
+  this.health = health;
+  this.damagePerAttack = damagePerAttack;
+  this.attack = function(defender) {
+    defender.health -= damagePerAttack
+    return defender.health > 0 ? "Defender survived" : "Defender defeated";
+  };
+};
+function declareWinner(fighter1, fighter2, firstAttacker) {
+  let firstAttackersTurn = true;
+  while (fighter1.health > 0 && fighter2.health > 0) {
+    let offender;
+    let defender;
+    if (firstAttackersTurn) {
+      if (firstAttacker === fighter1.name) {
+        offender = fighter1;
+        defender = fighter2;
+      } else {
+        offender = fighter2;
+        defender = fighter1;
+      };
+    } else {
+      if (firstAttacker === fighter1.name) {
+        offender = fighter2;
+        defender = fighter1;
+      } else {
+        offender = fighter1;
+        defender = fighter2;
+      };
+    };
+    const battleResult = offender.attack(defender);
+    if (battleResult === "Defender survived") {
+      firstAttackersTurn ? (firstAttackersTurn = false) : (firstAttackersTurn = true);
+    } else if(battleResult === "Defender defeated"){
+      return offender.name;
+    };
+  };
+};
+
+//Best solution
+
+function declareWinner(fighter1, fighter2, firstAttacker) {
+  var fac1 = Math.ceil( fighter1.health / fighter2.damagePerAttack );
+  var fac2 = Math.ceil( fighter2.health / fighter1.damagePerAttack );
+  if(fac1 < fac2) {
+    return fighter2.name;
+  } else if(fac2 < fac1) {
+    return fighter1.name;
+  } else {
+    return firstAttacker;
+  }
+}
