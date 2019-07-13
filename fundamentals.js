@@ -456,7 +456,6 @@ function declareWinner(fighter1, fighter2, firstAttacker) {
 };
 
 //Best solution
-
 function declareWinner(fighter1, fighter2, firstAttacker) {
   var fac1 = Math.ceil( fighter1.health / fighter2.damagePerAttack );
   var fac2 = Math.ceil( fighter2.health / fighter1.damagePerAttack );
@@ -467,4 +466,42 @@ function declareWinner(fighter1, fighter2, firstAttacker) {
   } else {
     return firstAttacker;
   }
+}
+
+/*
+
+18. We want to know the index of the vowels in a given word, for example, there are two vowels in the word super (the second and fourth letters).
+So given a string "super", we should return a list of [2, 4].
+Some examples:
+Mmmm  => []
+Super => [2,4]
+Apple => [1,5]
+YoMama -> [1,2,4,6]
+
+*/
+
+//My solution
+const vowels = {
+  en: ["A","E","I","O","U","Y","a","e","i","o","u","y"]
+};
+const vowelIndicesEN = word => {
+  word = word.split("");
+  let indices = [];
+  for (let i in word) {
+    for (let j in vowels.en) {
+      if (word[i] === vowels.en[j]) indices.push(Number(i)+1);
+    };
+  };
+  return indices;
+};
+
+//Best solution
+function vowelIndices(word) {
+  var arr = [];
+  for(var i = 0; i < word.length; i++) {
+    if(/[aeioyu]/i.test(word[i])) {
+      arr.push(i+1);
+    }
+  }
+  return arr;
 }
