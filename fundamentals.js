@@ -22,7 +22,7 @@ Calculate the row sums of this triangle from the row index (starting at index 1)
 
 */
 
-//My solution:
+// My solution:
 const rowSumOddNumbers = rowNum => {
   let triangle = [];
   let oddInts = [-1];
@@ -38,7 +38,7 @@ const rowSumOddNumbers = rowNum => {
   return triangle[rowNum].reduce((accumulator, currentValue) => accumulator + currentValue);
 };
 
-//Best solution:
+// Best solution:
 const rowSumOddNumbers = n => Math.pow(n, 3);
 
 /*
@@ -47,10 +47,10 @@ const rowSumOddNumbers = n => Math.pow(n, 3);
 
 */
 
-//My solution
+// My solution
 const opposite = number => number < 0 ? Math.abs(number) : number - 2 * (Math.abs(number));
 
-//Best solution
+// Best solution
 const opposite = number => -number;
 
 /*
@@ -74,13 +74,13 @@ Return the words of the initial song that Polycarpus used to make a dubsteb remi
 
 */
 
-//My solution
+// My solution
 const songDecoder = song => {
   song = song.replace(/WUB/g," ").trim().split("");
   return song.map((char, index) => song[index] !== " " ? char : song[index - 1] !== " " ? char : "").join("");
 };
 
-//Best solution
+// Best solution
 function songDecoder(song){
   return song.replace(/(WUB)+/g," ").trim()
 }
@@ -95,7 +95,7 @@ If the input array is empty consider it as: [0] (array with a zero).
 
 */
 
-//My solution
+// My solution
 function oddOrEven(array) {
   if(array.length > 0) {
     const dividedSum = array.reduce((accumulator, currentValue) => accumulator + currentValue) / 2;
@@ -105,7 +105,7 @@ function oddOrEven(array) {
   };
 };
 
-//Best solution
+// Best solution
 function oddOrEven(arr) {
   return arr.reduce((a,b)=>a+b,0) % 2 ? 'odd' : 'even';
 };
@@ -120,10 +120,10 @@ Write a function that returns both the minimum and maximum number of the given l
 
 */
 
-//My solution
+// My solution
 const minMax = arr => [Math.min.apply(Math, arr), Math.max.apply(Math, arr)];
 
-//Best solution
+// Best solution
 const minMax = arr => [Math.min(Math, arr), Math.max(Math, arr)];
 
 /*
@@ -134,7 +134,7 @@ String will never be empty and you do not need to account for different data typ
 
 */
 
-//My solution
+// My solution
 function findShort(s){
   let shortestLength = s.split(" ")[0].length;
   for (let string of s.split(" ")) {
@@ -143,7 +143,7 @@ function findShort(s){
   return shortestLength;
 };
 
-//Best solution
+// Best solution
 function findShort(s){
   return Math.min.apply(null, s.split(' ').map(w => w.length));
 }
@@ -156,7 +156,7 @@ Note: you will always receive a valid array containing a random assortment of di
 
 */
 
-//My solution
+// My solution
 function isValidWalk(walk) {
   let latitude = 0;
   let longitude = 0;
@@ -185,7 +185,7 @@ function isValidWalk(walk) {
   };
 };
 
-//Best solution
+// Best solution
 //Unknown, kata test cases were coded incorrectly.
 
 /*
@@ -196,7 +196,7 @@ If begin value is greater than the end, function should returns 0
 
 */
 
-//My solution
+// My solution
 const sequenceSum = (begin, end, step) => {
   if (begin <= end) {
     let valuesToSum = [begin];
@@ -209,7 +209,7 @@ const sequenceSum = (begin, end, step) => {
   };
 };
 
-//Best solution
+// Best solution
 const sequenceSum = (begin, end, step) => {
   if (begin > end) {
     return 0;
@@ -224,7 +224,7 @@ It should remove all values from list a, which are present in list b.
 
 */
 
-//My solution
+// My solution
 const array_diff = (list1, list2) => {
   let result = [];
   for (let i in list1) {
@@ -235,7 +235,7 @@ const array_diff = (list1, list2) => {
   return result;
 };
 
-//Best solution
+// Best solution
 function array_diff(a, b) {
   return a.filter(function(x) { return b.indexOf(x) == -1; });
 }
@@ -248,7 +248,7 @@ Tower block is represented as *
 
 */
 
-//My solution
+// My solution
 function towerBuilder(nFloors) {
   let tower = [];
   for (let i = 1; i <= nFloors; i++) {
@@ -269,7 +269,7 @@ function towerBuilder(nFloors) {
   return tower;
 };
 
-//Best solution
+// Best solution
 function towerBuilder(n) {
   return Array.from({length: n}, function(v, k) {
     const spaces = ' '.repeat(n - k - 1);
@@ -284,7 +284,7 @@ In DNA strings, symbols "A" and "T" are complements of each other, as "C" and "G
 
 */
 
-//My solution
+// My solution
 function DNAStrand(dna){
   let missingPiece = [];
   dna = dna.split("");
@@ -309,7 +309,7 @@ function DNAStrand(dna){
   return missingPiece.join("");
 };
 
-//Best solution
+// Best solution
 function DNAStrand(dna) {
   return dna.replace(/./g, function(c) {
     return DNAStrand.pairs[c]
@@ -330,7 +330,7 @@ What if the string is empty ? Then the result should be empty object literal { }
 
 */
 
-//My solution
+// My solution
 const count = string => {  
   let result = {};
   string = string.split("");
@@ -338,7 +338,7 @@ const count = string => {
   return result;
 };
 
-//Best solution
+// Best solution
 function count (string) {  
   var count = {};
   string.split('').forEach(function(s) {
@@ -355,7 +355,7 @@ The four operators are "add", "subtract", "divide", "multiply".
 
 */
 
-//My solution & Best solution
+// My solution & Best solution
 const arithmetic = (a, b, operator) => {
   if (typeof a === "number" && typeof b === "number") {
     switch(operator) {
@@ -385,14 +385,14 @@ Note: The function accepts an integer and returns an integer
 
 */
 
-//My solution
+// My solution
 function squareDigits(num){
   num = num.toString().split("");
   let squaredNum = num.map(digit => (Number(digit)*Number(digit)).toString())
   return Number(squaredNum.join(""));
 };
 
-//Best solution
+// Best solution
 
 function squareDigits(num){
   return Number(('' + num).split('').map(function (val) { return val * val;}).join(''));
@@ -414,7 +414,7 @@ function Fighter(name, health, damagePerAttack) {
 
 */
 
-//My solution DID NOT PASS TESTS
+// My solution DID NOT PASS TESTS
 function Fighter(name, health, damagePerAttack) {
   this.name = name;
   this.health = health;
@@ -455,7 +455,7 @@ function declareWinner(fighter1, fighter2, firstAttacker) {
   };
 };
 
-//Best solution
+// Best solution
 function declareWinner(fighter1, fighter2, firstAttacker) {
   var fac1 = Math.ceil( fighter1.health / fighter2.damagePerAttack );
   var fac2 = Math.ceil( fighter2.health / fighter1.damagePerAttack );
@@ -480,7 +480,7 @@ YoMama -> [1,2,4,6]
 
 */
 
-//My solution
+// My solution
 const vowels = {
   en: ["A","E","I","O","U","Y","a","e","i","o","u","y"]
 };
@@ -495,7 +495,7 @@ const vowelIndicesEN = word => {
   return indices;
 };
 
-//Best solution
+// Best solution
 function vowelIndices(word) {
   var arr = [];
   for(var i = 0; i < word.length; i++) {
@@ -516,9 +516,21 @@ findSum 10) should return 33 (3 + 5 + 6 + 9 + 10)
 
 */
 
-//My solution & Best solution
+// My solution & Best solution
 const findSum = n => {
   let sum = 0;
   for (let i = 1; i <= n; i++) if (i % 3 === 0 || i % 5 === 0) sum += i;
   return sum;
 };
+
+/*
+
+20. Complete the solution so that it returns true if the first argument(string) passed in ends with the 2nd argument (also a string).
+Examples:
+solution('abc', 'bc') // returns true
+solution('abc', 'd') // returns false
+
+*/
+
+// My solution & Best solution
+const solution = (str, ending) => str.endsWith(ending);
