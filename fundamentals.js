@@ -693,3 +693,38 @@ function alphabetPosition(text) {
     .map( (c) => c.charCodeAt() - 64)
     .join(' ');
 }
+
+/*
+
+25. Consonant value
+
+-- We shall assign the following values: a = 1, b = 2 ... z = 26.
+
+For example, for the word "zodiacs", solve("zodiacs") = 26
+-- The consonant substrings are: "z", "d" and "cs" and the values are z = 26, d = 4 and cs = 3 + 19 = 22. The highest is 26.
+
+For the word "strength", solve("strength") = 57
+-- The consonant substrings are: "str" and "ngth" with values "str" = 19 + 20 + 18 = 57 and "ngth" = 14 + 7 + 20 + 8 = 49. The highest is 57.
+Vowels are are a,e,i,o,u.
+
+*/
+
+// My solution
+const alphabetIndex = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
+const vowels = ["a", "e", "i", "o", "u"];
+
+const solve = str => {
+  let highestValue = 0;
+  let currentValue = 0;
+  str.split("").forEach(char => {
+    if (!vowels.includes(char)) {
+      const indexValue = alphabetIndex.findIndex(alphaChar => alphaChar === char) + 1;
+      currentValue += indexValue;
+      if (currentValue > highestValue) highestValue = currentValue;
+    } else currentValue = 0;
+  });
+  return highestValue;
+};
+
+// Best solution
+const solve = s => s.split(/[aeiou]+/).reduce((s,n)=> Math.max(s, n.split('').reduce((a,b)=> a + b.charCodeAt(0)-96,0 )), 0);
