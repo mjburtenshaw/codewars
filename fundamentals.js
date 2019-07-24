@@ -792,3 +792,30 @@ numbers.odd();     // must return [1, 3, 5]
 
 // There is no best solution. Extending built-in prototypes should be avoided at all costs. This is giving developers a loaded gun and teaching them how to pull the trigger, while telling them to look down the barrel to make sure the bullet comes out.
 
+/*
+
+27. Find the odd int
+Given an array, find the int that appears an odd number of times.
+There will always be only one integer that appears an odd number of times.
+
+*/
+
+// My solution
+const findOdd = array => {
+  let result;
+  let count = {
+    value: 1,
+    isOdd: () => count.value % 2 !== 0,
+    check: (num1, num2, indexOfNum1, indexOfNum2) => { if (num1 === num2 && indexOfNum1 !== indexOfNum2) count.value++ },
+    reset: () => count.value = 1
+  };
+  array.forEach((iNum, i) => {
+    array.forEach((jNum, j) => count.check(iNum, jNum, i, j));
+    if (count.isOdd()) result = iNum;
+    else count.reset();
+  });
+  return result;
+};
+
+// Best solution
+const findOdd = (xs) => xs.reduce((a, b) => a ^ b);
