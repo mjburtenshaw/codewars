@@ -836,52 +836,79 @@ tickets([25, 25, 50, 50, 100]) // => NO. Vasya will not have the right bills to 
 */
 
 // My solution
+class BillSlot {
+  constructor(billType) {
+    this.value = billType,
+    this.count = 0,
+    this.updateCount = (operator, count) => {
+      this.count = eval(this.count + operator + count);
+      cashRegister.balance.update(this.value, operator);
+    }
+  }
+}
+
 let cashRegister = {
-  billSlot: billType => {
-    const billSlot = {
-      value: billType,
-      count: 0,
-      updateCount: operator => {
-        billSlot.count = eval(billSlot.count + operator + 1);
-        cashRegister.balance.update(billSlot.value, operator);
-      }
-    };
-    return billSlot;
-  },
-  "25s": new this.billSlot(25),
-  "50s": new this.billSlot(50),
-  "100s": new this.billSlot(100),
+  25: new BillSlot(25),
+  50: new BillSlot(50),
+  100: new BillSlot(100),
   balance: {
     value: 0,
     update: (bill, operator) => cashRegister.balance.value = eval(cashRegister.balance.value + operator + bill)
   },
-  checkForChange = () => {},
-  acceptPayment: bill => {
-    cashRegister[bill]++;
-    if (bill === 50) cashRegister[25]--;
-    else if (bill === 100) {
-      if (cashRegister[50] > 0) {cashRegister[50]--};
+  checkForChange: bill => {
+    let instruction = {
+      isEnoughChange: false,
+      billsToDispense: [
+        {type: 25, count: 0},
+        {type: 50, count: 0}
+      ]
     };
+    if (bill === 25) instruction.isEnoughChange = true;
+    else if (bill === 50 && cashRegister[25].count > 0) {
+      instruction.isEnoughChange = true;
+      instruction.billsToDispense[0].count = 1;
+    } else if (bill === 100) {
+      if (cashRegister[50].count > 0 && cashRegister[25].count > 0) {
+        instruction.isEnoughChange = true;
+        instruction.billsToDispense[0].count = 1;
+        instruction.billsToDispense[1].count = 1;
+      } else if (cashRegister[25].count >= 3) {
+        instruction.isEnoughChange = true;
+        instruction.billsToDispense[0].count = 3;
+      };
+    };
+    return instruction;
+  },
+  acceptPayment: (payment, change) => {
+    cashRegister[payment].updateCount("+", 1);
+    change.forEach(bill => cashRegister[bill.type].updateCount("-", bill.count));
+  },
+  checkout: () => {
+    const totalEarned = cashRegister.balance.value;
+    const billCounts = {
+      25: cashRegister[25].count,
+      50: cashRegister[50].count,
+      100: cashRegister[100].count,
+    };
+    cashRegister.balance.value = 0;
+    cashRegister[25].count = 0;
+    cashRegister[50].count = 0;
+    cashRegister[100].count = 0;
+    return { totalEarned, billCounts };
   }
 };
 
 const tickets = peopleInLine => {
   let canSellToAll = true;
   peopleInLine.forEach(customer => {
-    const bill = customer;
-    if (bill > 25) {} else {
-
+    if (canSellToAll) {
+      const bill = customer;
+      const changeCheck = cashRegister.checkForChange(bill);
+      if (changeCheck.isEnoughChange) cashRegister.acceptPayment(bill, changeCheck.billsToDispense);
+      else canSellToAll = false;
     };
   });
-  return canSellToAll;
+  cashRegister.checkout();
+  return canSellToAll ? "YES" : "NO";
 };
-
-const newLine = "\n";
-
-console.log(
-  tickets([25, 25, 50, 50]) + newLine,
-  tickets([25, 100])
-);
-
-// Best practice
 
