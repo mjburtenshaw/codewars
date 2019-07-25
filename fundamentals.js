@@ -38,7 +38,7 @@ const rowSumOddNumbers = rowNum => {
   return triangle[rowNum].reduce((accumulator, currentValue) => accumulator + currentValue);
 };
 
-// Best solution:
+// Best practice:
 const rowSumOddNumbers = n => Math.pow(n, 3);
 
 /*
@@ -50,7 +50,7 @@ const rowSumOddNumbers = n => Math.pow(n, 3);
 // My solution
 const opposite = number => number < 0 ? Math.abs(number) : number - 2 * (Math.abs(number));
 
-// Best solution
+// Best practice
 const opposite = number => -number;
 
 /*
@@ -80,7 +80,7 @@ const songDecoder = song => {
   return song.map((char, index) => song[index] !== " " ? char : song[index - 1] !== " " ? char : "").join("");
 };
 
-// Best solution
+// Best practice
 function songDecoder(song){
   return song.replace(/(WUB)+/g," ").trim()
 }
@@ -105,7 +105,7 @@ function oddOrEven(array) {
   };
 };
 
-// Best solution
+// Best practice
 function oddOrEven(arr) {
   return arr.reduce((a,b)=>a+b,0) % 2 ? 'odd' : 'even';
 };
@@ -123,7 +123,7 @@ Write a function that returns both the minimum and maximum number of the given l
 // My solution
 const minMax = arr => [Math.min.apply(Math, arr), Math.max.apply(Math, arr)];
 
-// Best solution
+// Best practice
 const minMax = arr => [Math.min(Math, arr), Math.max(Math, arr)];
 
 /*
@@ -143,7 +143,7 @@ function findShort(s){
   return shortestLength;
 };
 
-// Best solution
+// Best practice
 function findShort(s){
   return Math.min.apply(null, s.split(' ').map(w => w.length));
 }
@@ -185,7 +185,7 @@ function isValidWalk(walk) {
   };
 };
 
-// Best solution
+// Best practice
 //Unknown, kata test cases were coded incorrectly.
 
 /*
@@ -209,7 +209,7 @@ const sequenceSum = (begin, end, step) => {
   };
 };
 
-// Best solution
+// Best practice
 const sequenceSum = (begin, end, step) => {
   if (begin > end) {
     return 0;
@@ -235,7 +235,7 @@ const array_diff = (list1, list2) => {
   return result;
 };
 
-// Best solution
+// Best practice
 function array_diff(a, b) {
   return a.filter(function(x) { return b.indexOf(x) == -1; });
 }
@@ -269,7 +269,7 @@ function towerBuilder(nFloors) {
   return tower;
 };
 
-// Best solution
+// Best practice
 function towerBuilder(n) {
   return Array.from({length: n}, function(v, k) {
     const spaces = ' '.repeat(n - k - 1);
@@ -309,7 +309,7 @@ function DNAStrand(dna){
   return missingPiece.join("");
 };
 
-// Best solution
+// Best practice
 function DNAStrand(dna) {
   return dna.replace(/./g, function(c) {
     return DNAStrand.pairs[c]
@@ -338,7 +338,7 @@ const count = string => {
   return result;
 };
 
-// Best solution
+// Best practice
 function count (string) {  
   var count = {};
   string.split('').forEach(function(s) {
@@ -355,7 +355,7 @@ The four operators are "add", "subtract", "divide", "multiply".
 
 */
 
-// My solution & Best solution
+// My solution & Best practice
 const arithmetic = (a, b, operator) => {
   if (typeof a === "number" && typeof b === "number") {
     switch(operator) {
@@ -392,7 +392,7 @@ function squareDigits(num){
   return Number(squaredNum.join(""));
 };
 
-// Best solution
+// Best practice
 
 function squareDigits(num){
   return Number(('' + num).split('').map(function (val) { return val * val;}).join(''));
@@ -455,7 +455,7 @@ function declareWinner(fighter1, fighter2, firstAttacker) {
   };
 };
 
-// Best solution
+// Best practice
 function declareWinner(fighter1, fighter2, firstAttacker) {
   var fac1 = Math.ceil( fighter1.health / fighter2.damagePerAttack );
   var fac2 = Math.ceil( fighter2.health / fighter1.damagePerAttack );
@@ -495,7 +495,7 @@ const vowelIndicesEN = word => {
   return indices;
 };
 
-// Best solution
+// Best practice
 function vowelIndices(word) {
   var arr = [];
   for(var i = 0; i < word.length; i++) {
@@ -516,7 +516,7 @@ findSum 10) should return 33 (3 + 5 + 6 + 9 + 10)
 
 */
 
-// My solution & Best solution
+// My solution & Best practice
 const findSum = n => {
   let sum = 0;
   for (let i = 1; i <= n; i++) if (i % 3 === 0 || i % 5 === 0) sum += i;
@@ -532,7 +532,7 @@ solution('abc', 'd') // returns false
 
 */
 
-// My solution & Best solution
+// My solution & Best practice
 const solution = (str, ending) => str.endsWith(ending);
 
 /*
@@ -585,7 +585,7 @@ const comp = (array1, array2) => {
   } else return false;
 };
 
-// Best solution
+// Best practice
 function comp(array1, array2) {
   if(array1 == null || array2 == null) return false;
   array1.sort((a, b) => a - b); array2.sort((a, b) => a - b);
@@ -611,7 +611,7 @@ The data is given in an array as such:
 
 */
 
-// My solution & best solution
+// My solution & Best practice
 const dataReverse = data => {
   let result = [];
   for (let i = 0; i < data.length - 1; i += 8) {
@@ -639,7 +639,7 @@ Example:
 
 */
 
-// My solution & Best solution
+// My solution & Best practice
 const longestPalindrome = str => {
   if (str.length === 0) return 0
   else {
@@ -685,7 +685,7 @@ const alphabetPosition = text => {
   }).join("").trim();
 }
 
-// Best solution
+// Best practice
 function alphabetPosition(text) {
   return text
     .toUpperCase()
@@ -726,7 +726,7 @@ const solve = str => {
   return highestValue;
 };
 
-// Best solution
+// Best practice
 const solve = s => s.split(/[aeiou]+/).reduce((s,n)=> Math.max(s, n.split('').reduce((a,b)=> a + b.charCodeAt(0)-96,0 )), 0);
 
 /*
@@ -790,7 +790,7 @@ numbers.odd();     // must return [1, 3, 5]
 //   return oddValues;
 // };
 
-// There is no best solution. Extending built-in prototypes should be avoided at all costs. This is giving developers a loaded gun and teaching them how to pull the trigger, while telling them to look down the barrel to make sure the bullet comes out.
+// There is no Best practice. Extending built-in prototypes should be avoided at all costs. This is giving developers a loaded gun and teaching them how to pull the trigger, while telling them to look down the barrel to make sure the bullet comes out.
 
 /*
 
@@ -817,5 +817,71 @@ const findOdd = array => {
   return result;
 };
 
-// Best solution
+// Best practice
 const findOdd = (xs) => xs.reduce((a, b) => a ^ b);
+
+/*
+
+28. Vasya - Clerk
+The new "Avengers" movie has just been released! There are a lot of people at the cinema box office standing in a huge line. Each of them has a single 100, 50 or 25 dollars bill. An "Avengers" ticket costs 25 dollars.
+Vasya is currently working as a clerk. He wants to sell a ticket to every single person in this line.
+Can Vasya sell a ticket to each person and give the change if he initially has no money and sells the tickets strictly in the order people follow in the line?
+Return YES, if Vasya can sell a ticket to each person and give the change with the bills he has at hand at that moment. Otherwise return NO.
+
+Examples:
+tickets([25, 25, 50]) // => YES 
+tickets([25, 100]) // => NO. Vasya will not have enough money to give change to 100 dollars
+tickets([25, 25, 50, 50, 100]) // => NO. Vasya will not have the right bills to give 75 dollars of change (you can't make two bills of 25 from one of 50)
+
+*/
+
+// My solution
+let cashRegister = {
+  billSlot: billType => {
+    const billSlot = {
+      value: billType,
+      count: 0,
+      updateCount: operator => {
+        billSlot.count = eval(billSlot.count + operator + 1);
+        cashRegister.balance.update(billSlot.value, operator);
+      }
+    };
+    return billSlot;
+  },
+  "25s": new this.billSlot(25),
+  "50s": new this.billSlot(50),
+  "100s": new this.billSlot(100),
+  balance: {
+    value: 0,
+    update: (bill, operator) => cashRegister.balance.value = eval(cashRegister.balance.value + operator + bill)
+  },
+  checkForChange = () => {},
+  acceptPayment: bill => {
+    cashRegister[bill]++;
+    if (bill === 50) cashRegister[25]--;
+    else if (bill === 100) {
+      if (cashRegister[50] > 0) {cashRegister[50]--};
+    };
+  }
+};
+
+const tickets = peopleInLine => {
+  let canSellToAll = true;
+  peopleInLine.forEach(customer => {
+    const bill = customer;
+    if (bill > 25) {} else {
+
+    };
+  });
+  return canSellToAll;
+};
+
+const newLine = "\n";
+
+console.log(
+  tickets([25, 25, 50, 50]) + newLine,
+  tickets([25, 100])
+);
+
+// Best practice
+
