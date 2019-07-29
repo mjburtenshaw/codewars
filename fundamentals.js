@@ -941,3 +941,33 @@ const balance = (left, right) => {
   else if (leftWeight < rightWeight) return "Right";
   else return "Balance";
 };
+
+/*
+
+30. Highest Scoring Word
+
+Given a string of words, you need to find the highest scoring word.
+Each letter of a word scores points according to its position in the alphabet: a = 1, b = 2, c = 3 etc.
+You need to return the highest scoring word as a string.
+If two words score the same, return the word that appears earliest in the original string.
+All letters will be lowercase and all inputs will be valid.
+
+*/
+
+// My solution
+const getHighestScoringWord = str => {
+  let highestScoringWord = "";
+  let highestScore = 0;
+  str.split(" ").forEach(word => {
+    let score = 0;
+    word.split("").forEach(letter => {
+      const value = letter.charCodeAt(0) - 96;
+      score += value;
+    });
+    if (score > highestScore) {
+      highestScoringWord = word;
+      highestScore = score;
+    };
+  });
+  return highestScoringWord;
+};
