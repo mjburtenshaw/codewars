@@ -22,7 +22,7 @@ Calculate the row sums of this triangle from the row index (starting at index 1)
 
 */
 
-// My solution:
+/* My solution */
 const rowSumOddNumbers = rowNum => {
   let triangle = [];
   let oddInts = [-1];
@@ -38,7 +38,7 @@ const rowSumOddNumbers = rowNum => {
   return triangle[rowNum].reduce((accumulator, currentValue) => accumulator + currentValue);
 };
 
-// Best practice:
+/* Best practice */
 const rowSumOddNumbers = n => Math.pow(n, 3);
 
 /*
@@ -47,10 +47,10 @@ const rowSumOddNumbers = n => Math.pow(n, 3);
 
 */
 
-// My solution
+/* My solution */
 const opposite = number => number < 0 ? Math.abs(number) : number - 2 * (Math.abs(number));
 
-// Best practice
+/* Best practice */
 const opposite = number => -number;
 
 /*
@@ -74,13 +74,13 @@ Return the words of the initial song that Polycarpus used to make a dubsteb remi
 
 */
 
-// My solution
+/* My solution */
 const songDecoder = song => {
   song = song.replace(/WUB/g," ").trim().split("");
   return song.map((char, index) => song[index] !== " " ? char : song[index - 1] !== " " ? char : "").join("");
 };
 
-// Best practice
+/* Best practice */
 function songDecoder(song){
   return song.replace(/(WUB)+/g," ").trim()
 }
@@ -95,7 +95,7 @@ If the input array is empty consider it as: [0] (array with a zero).
 
 */
 
-// My solution
+/* My solution */
 function oddOrEven(array) {
   if(array.length > 0) {
     const dividedSum = array.reduce((accumulator, currentValue) => accumulator + currentValue) / 2;
@@ -105,7 +105,7 @@ function oddOrEven(array) {
   };
 };
 
-// Best practice
+/* Best practice */
 function oddOrEven(arr) {
   return arr.reduce((a,b)=>a+b,0) % 2 ? 'odd' : 'even';
 };
@@ -120,10 +120,10 @@ Write a function that returns both the minimum and maximum number of the given l
 
 */
 
-// My solution
+/* My solution */
 const minMax = arr => [Math.min.apply(Math, arr), Math.max.apply(Math, arr)];
 
-// Best practice
+/* Best practice */
 const minMax = arr => [Math.min(Math, arr), Math.max(Math, arr)];
 
 /*
@@ -134,7 +134,7 @@ String will never be empty and you do not need to account for different data typ
 
 */
 
-// My solution
+/* My solution */
 function findShort(s){
   let shortestLength = s.split(" ")[0].length;
   for (let string of s.split(" ")) {
@@ -143,7 +143,7 @@ function findShort(s){
   return shortestLength;
 };
 
-// Best practice
+/* Best practice */
 function findShort(s){
   return Math.min.apply(null, s.split(' ').map(w => w.length));
 }
@@ -156,7 +156,7 @@ Note: you will always receive a valid array containing a random assortment of di
 
 */
 
-// My solution
+/* My solution */
 function isValidWalk(walk) {
   let latitude = 0;
   let longitude = 0;
@@ -185,7 +185,7 @@ function isValidWalk(walk) {
   };
 };
 
-// Best practice
+/* Best practice */
 //Unknown, kata test cases were coded incorrectly.
 
 /*
@@ -196,7 +196,7 @@ If begin value is greater than the end, function should returns 0
 
 */
 
-// My solution
+/* My solution */
 const sequenceSum = (begin, end, step) => {
   if (begin <= end) {
     let valuesToSum = [begin];
@@ -209,7 +209,7 @@ const sequenceSum = (begin, end, step) => {
   };
 };
 
-// Best practice
+/* Best practice */
 const sequenceSum = (begin, end, step) => {
   if (begin > end) {
     return 0;
@@ -224,7 +224,7 @@ It should remove all values from list a, which are present in list b.
 
 */
 
-// My solution
+/* My solution */
 const array_diff = (list1, list2) => {
   let result = [];
   for (let i in list1) {
@@ -235,7 +235,7 @@ const array_diff = (list1, list2) => {
   return result;
 };
 
-// Best practice
+/* Best practice */
 function array_diff(a, b) {
   return a.filter(function(x) { return b.indexOf(x) == -1; });
 }
@@ -248,7 +248,7 @@ Tower block is represented as *
 
 */
 
-// My solution
+/* My solution */
 function towerBuilder(nFloors) {
   let tower = [];
   for (let i = 1; i <= nFloors; i++) {
@@ -269,7 +269,7 @@ function towerBuilder(nFloors) {
   return tower;
 };
 
-// Best practice
+/* Best practice */
 function towerBuilder(n) {
   return Array.from({length: n}, function(v, k) {
     const spaces = ' '.repeat(n - k - 1);
@@ -284,7 +284,7 @@ In DNA strings, symbols "A" and "T" are complements of each other, as "C" and "G
 
 */
 
-// My solution
+/* My solution */
 function DNAStrand(dna){
   let missingPiece = [];
   dna = dna.split("");
@@ -309,7 +309,7 @@ function DNAStrand(dna){
   return missingPiece.join("");
 };
 
-// Best practice
+/* Best practice */
 function DNAStrand(dna) {
   return dna.replace(/./g, function(c) {
     return DNAStrand.pairs[c]
@@ -330,7 +330,7 @@ What if the string is empty ? Then the result should be empty object literal { }
 
 */
 
-// My solution
+/* My solution */
 const count = string => {  
   let result = {};
   string = string.split("");
@@ -338,7 +338,7 @@ const count = string => {
   return result;
 };
 
-// Best practice
+/* Best practice */
 function count (string) {  
   var count = {};
   string.split('').forEach(function(s) {
@@ -355,7 +355,7 @@ The four operators are "add", "subtract", "divide", "multiply".
 
 */
 
-// My solution & Best practice
+/* My solution & Best practice */ 
 const arithmetic = (a, b, operator) => {
   if (typeof a === "number" && typeof b === "number") {
     switch(operator) {
@@ -385,14 +385,14 @@ Note: The function accepts an integer and returns an integer
 
 */
 
-// My solution
+/* My solution */
 function squareDigits(num){
   num = num.toString().split("");
   let squaredNum = num.map(digit => (Number(digit)*Number(digit)).toString())
   return Number(squaredNum.join(""));
 };
 
-// Best practice
+/* Best practice */
 
 function squareDigits(num){
   return Number(('' + num).split('').map(function (val) { return val * val;}).join(''));
@@ -414,7 +414,7 @@ function Fighter(name, health, damagePerAttack) {
 
 */
 
-// My solution DID NOT PASS TESTS
+/* My solution DID NOT PASS TESTS */ 
 function Fighter(name, health, damagePerAttack) {
   this.name = name;
   this.health = health;
@@ -455,7 +455,7 @@ function declareWinner(fighter1, fighter2, firstAttacker) {
   };
 };
 
-// Best practice
+/* Best practice */
 function declareWinner(fighter1, fighter2, firstAttacker) {
   var fac1 = Math.ceil( fighter1.health / fighter2.damagePerAttack );
   var fac2 = Math.ceil( fighter2.health / fighter1.damagePerAttack );
@@ -480,7 +480,7 @@ YoMama -> [1,2,4,6]
 
 */
 
-// My solution
+/* My solution */
 const vowels = {
   en: ["A","E","I","O","U","Y","a","e","i","o","u","y"]
 };
@@ -495,7 +495,7 @@ const vowelIndicesEN = word => {
   return indices;
 };
 
-// Best practice
+/* Best practice */
 function vowelIndices(word) {
   var arr = [];
   for(var i = 0; i < word.length; i++) {
@@ -516,7 +516,7 @@ findSum 10) should return 33 (3 + 5 + 6 + 9 + 10)
 
 */
 
-// My solution & Best practice
+/* My solution & Best practice */
 const findSum = n => {
   let sum = 0;
   for (let i = 1; i <= n; i++) if (i % 3 === 0 || i % 5 === 0) sum += i;
@@ -532,7 +532,7 @@ solution('abc', 'd') // returns false
 
 */
 
-// My solution & Best practice
+/* My solution & Best practice */
 const solution = (str, ending) => str.endsWith(ending);
 
 /*
@@ -569,7 +569,7 @@ If a or b are empty then the result is self-evident.
 a or b are empty or not empty lists.
 */
 
-// My solution
+/* My solution */
 const comp = (array1, array2) => {
   if (array1 && array2) {
     let array1Copy = [...array1];
@@ -585,7 +585,7 @@ const comp = (array1, array2) => {
   } else return false;
 };
 
-// Best practice
+/* Best practice */
 function comp(array1, array2) {
   if(array1 == null || array2 == null) return false;
   array1.sort((a, b) => a - b); array2.sort((a, b) => a - b);
@@ -611,7 +611,7 @@ The data is given in an array as such:
 
 */
 
-// My solution & Best practice
+/* My solution & Best practice */
 const dataReverse = data => {
   let result = [];
   for (let i = 0; i < data.length - 1; i += 8) {
@@ -639,7 +639,7 @@ Example:
 
 */
 
-// My solution & Best practice
+/* My solution & Best practice */
 const longestPalindrome = str => {
   if (str.length === 0) return 0
   else {
@@ -672,7 +672,7 @@ Should return "20 8 5 19 21 14 19 5 20 19 5 20 19 1 20 20 23 5 12 22 5 15 3 12 1
 
 */
 
-// My solution
+/* My solution */
 const alphabetIndex = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
 const alphabetPosition = text => {
   return text.split("").map((letter, lIndex) => {
@@ -685,7 +685,7 @@ const alphabetPosition = text => {
   }).join("").trim();
 }
 
-// Best practice
+/* Best practice */
 function alphabetPosition(text) {
   return text
     .toUpperCase()
@@ -709,7 +709,7 @@ Vowels are are a,e,i,o,u.
 
 */
 
-// My solution
+/* My solution */
 const alphabetIndex = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
 const vowels = ["a", "e", "i", "o", "u"];
 
@@ -726,7 +726,7 @@ const solve = str => {
   return highestValue;
 };
 
-// Best practice
+/* Best practice */
 const solve = s => s.split(/[aeiou]+/).reduce((s,n)=> Math.max(s, n.split('').reduce((a,b)=> a + b.charCodeAt(0)-96,0 )), 0);
 
 /*
@@ -758,7 +758,7 @@ numbers.odd();     // must return [1, 3, 5]
 
 */
 
-// My solution
+/* My solution */
 // Array.prototype.square = function() {
 //   let squaredArray = [];
 //   for (let i = 0; i < this.length; i++) squaredArray.push(this[i] * this[i]);
@@ -800,7 +800,7 @@ There will always be only one integer that appears an odd number of times.
 
 */
 
-// My solution
+/* My solution */
 const findOdd = array => {
   let result;
   let count = {
@@ -817,7 +817,7 @@ const findOdd = array => {
   return result;
 };
 
-// Best practice
+/* Best practice */
 const findOdd = (xs) => xs.reduce((a, b) => a ^ b);
 
 /*
@@ -835,7 +835,7 @@ tickets([25, 25, 50, 50, 100]) // => NO. Vasya will not have the right bills to 
 
 */
 
-// My solution
+/* My solution */
 class BillSlot {
   constructor(billType) {
     this.value = billType,
@@ -927,7 +927,7 @@ balance("!!???!????","??!!?!!!!!!!") === "Balance"
 
 */
 
-// My solution
+/* My solution */
 const balance = (left, right) => {
   const getWeightFor = string => {
     const exclamationWeight = (string.match(/!/g) || []).length * 2;
@@ -954,7 +954,7 @@ All letters will be lowercase and all inputs will be valid.
 
 */
 
-// My solution
+/* My solution */
 const getHighestScoringWord = str => {
   let highestScoringWord = "";
   let highestScore = 0;
@@ -1024,7 +1024,7 @@ if you want to translate, please ask before translating.
 
 */
 
-// Best practice
+/* Best practice */
 
 function dirReduc(plan) {
   var opposite = {
@@ -1072,7 +1072,7 @@ If you are given an array with multiple answers, return the lowest correct index
 
 */
 
-// My solution
+/* My solution */
 const findEvenIndex = arr => {
   let result = -1;
   for (let N = 0; N < arr.length; N++) {
@@ -1104,7 +1104,7 @@ consecutive strings : follow one after another without an interruption
 
 */
 
-// My solution
+/* My solution */
 const longestConsec = (strarr, k) => {
   if (k <= 0 || k > strarr.length || strarr.length === 0) return "";
   else if (k === strarr.length) return strarr.join(""); 
@@ -1150,7 +1150,7 @@ A size 5 diamond:
 
 */
 
-// My solution
+/* My solution */
 const diamond = n => {
   const median = ((n - 1) / 2) + 1;
   let gem = [];
@@ -1174,7 +1174,7 @@ Reverse every other word in a given string, then return the string. Throw away a
 
 */
 
-// My solution
+/* My solution */
 const reverse = str => str.split(" ").map((word, index) => {
   if (index % 2 !== 0) word = word.split("").reverse().join("");
   return word;
@@ -1212,7 +1212,7 @@ Hint: While it wouldn't take too long to hard code the amount of keypresses for 
 
 */
 
-// My solution
+/* My solution */
 const pressIndex = {
   1: /[ *#1adgjmptw]/i,
   2: /[0behknqux]/i,
@@ -1232,3 +1232,65 @@ const presses = phrase => {
   });
   return numPresses;
 };
+
+/*
+
+37. Decipher this!
+
+You are given a secret message you need to decipher. Here are the things you need to know to decipher it:
+
+For each word:
+
+the second and the last letter is switched (e.g. Hello becomes Holle)
+the first letter is replaced by its character code (e.g. H becomes 72)
+Note: there are no special characters used, only letters and spaces
+
+Examples
+
+decipherThis('72olle 103doo 100ya'); // 'Hello good day'
+decipherThis('82yade 115te 103o'); // 'Ready set go'
+
+*/
+
+/* My solution */
+const decipherThis = str => {
+  let decodedStr = "";
+  str.split(" ").forEach(word => {
+    let firstChar;
+    let arrivedAtSecondChar = false;
+    let elementsToRemove;
+    word += " ";
+    word.split("").forEach((char, index) => {
+      if (char.match(/\d/) && arrivedAtSecondChar) arrivedAtSecondChar = false;
+      if (!char.match(/\d/) && !arrivedAtSecondChar) {
+        arrivedAtSecondChar = true;
+        firstChar = String.fromCharCode(Number(word.slice(0, index)));
+        elementsToRemove = index;
+      };
+    });
+    word = word.trim();
+    word = word.split("");
+    word.splice(0, elementsToRemove, firstChar);
+    if (word.length > 2 ) {
+      const secondChar = word[1];
+      const lastChar = word[word.length - 1];
+      word.splice(1, 1, lastChar);
+      word.splice(word.length - 1, 1, secondChar);
+    }
+    word.push(" ");
+    word = word.join("");
+    decodedStr += word;
+  });
+  decodedStr = decodedStr.trim();
+  return decodedStr;
+}; 
+
+/* Best practice */
+function decipherThis(str) {
+  return str.split(" ")
+    .map(w =>
+      w.replace(/^\d+/, c => String.fromCharCode(c))
+       .replace(/^(.)(.)(.*)(.)$/, "$1$4$3$2")
+    )
+    .join(" ")
+}
