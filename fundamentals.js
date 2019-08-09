@@ -1330,3 +1330,39 @@ const money_value = str => {
 
 /* Best practice */
 const money_value = s => +s.replace(/\s|\$/g, '') || 0;
+
+/*
+
+39. Sort the odd
+
+You have an array of numbers.
+Your task is to sort ascending odd numbers but even numbers must be on their places.
+
+Zero isn't an odd number and you don't need to move it. If you have an empty array, you need to return it.
+
+Example
+
+sortArray([5, 3, 2, 8, 1, 4]) == [1, 3, 2, 8, 5, 4]
+
+*/
+
+/* My solution */
+const sortArray = arr => {
+  if (arr.length > 0) {
+    let oddInts = arr.filter(int => int % 2 === 1 ? int : null).sort((a, b) => a - b);
+    console.log(oddInts);
+    arr.forEach((int, index) => {
+      if (int % 2 === 1) {
+        arr.splice(index, 1, oddInts[0]);
+        oddInts.shift();
+      };
+    });
+  };
+  return arr;
+};
+
+/* Best practice */
+function sortArray(array) {
+  const odd = array.filter((x) => x % 2).sort((a,b) => a - b);
+  return array.map((x) => x % 2 ? odd.shift() : x);
+}
