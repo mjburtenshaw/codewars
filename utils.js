@@ -1,5 +1,8 @@
 const Utils = {};
 
-Utils.alphabetIndex = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
+Utils.isPrime = num => {
+  for(let i = 2, s = Math.sqrt(num); i <= s; i++) if(num % i === 0) return false; 
+  return num > 1;
+}
 
 export default Utils;
