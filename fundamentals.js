@@ -1417,3 +1417,164 @@ const minimumNumber = numbers => {
     return key;
   };
 };
+
+/*
+
+41. Closest and Smallest
+
+Input
+
+a string strng of n positive numbers (n = 0 or n >= 2)
+Let us call weight of a number the sum of its digits. For example 99 will have "weight" 18, 100 will have "weight" 1.
+
+Two numbers are "close" if the difference of their weights is small.
+
+Task:
+
+For each number in strng calculate its "weight" and then find two numbers of strng that have:
+
+the smallest difference of weights ie that are the closest
+with the smallest weights
+and with the smallest indices (or ranks, numbered from 0) in strng
+Output:
+
+an array of two arrays, each subarray in the following format:
+[number-weight, index in strng of the corresponding number, original corresponding number instrng]
+
+or a pair of two subarrays (Haskell, Clojure, FSharp) or an array of tuples (Elixir, C++)
+
+or a (char*) in C mimicking an array of two subarrays or a string
+
+or a matrix in R (2 rows, 3 columns, no columns names)
+
+The two subarrays are sorted in ascending order by their number weights if these weights are different, by their indexes in the string if they have the same weights.
+
+Examples:
+
+Let us call that function closest
+
+strng = "103 123 4444 99 2000"
+the weights are 4, 6, 16, 18, 2 (ie 2, 4, 6, 16, 18)
+
+closest should return [[2, 4, 2000], [4, 0, 103]] (or ([2, 4, 2000], [4, 0, 103])
+or [{2, 4, 2000}, {4, 0, 103}] or ... depending on the language)
+because 2000 and 103 have for weight 2 and 4, ther indexes in strng are 4 and 0.
+The smallest difference is 2.
+4 (for 103) and 6 (for 123) have a difference of 2 too but they are not 
+the smallest ones with a difference of 2 between their weights.
+....................
+
+strng = "80 71 62 53"
+All the weights are 8.
+closest should return [[8, 0, 80], [8, 1, 71]]
+71 and 62 have also:
+- the smallest weights (which is 8 for all)
+- the smallest difference of weights (which is 0 for all pairs)
+- but not the smallest indices in strng.
+....................
+
+strng = "444 2000 445 544"
+the weights are 12, 2, 13, 13 (ie 2, 12, 13, 13)
+
+closest should return [[13, 2, 445], [13, 3, 544]] or ([13, 2, 445], [13, 3, 544])
+or [{13, 2, 445}, {13, 3, 544}] or ...
+444 and 2000 have the smallest weights (12 and 2) but not the smallest difference of weights;
+they are not the closest.
+Here the smallest difference is 0 and in the result the indexes are in ascending order.
+...................
+
+closest("444 2000 445 644 2001 1002") --> [[3, 4, 2001], [3, 5, 1002]] or ([3, 4, 2001], 
+[3, 5, 1002]]) or [{3, 4, 2001}, {3, 5, 1002}] or ...
+Here the smallest difference is 0 and in the result the indexes are in ascending order.
+...................
+
+closest("239382 162 254765 182 485944 468751 49780 108 54")
+The weights are: 27, 9, 29, 11, 34, 31, 28, 9, 9.
+closest should return  [[9, 1, 162], [9, 7, 108]] or ([9, 1, 162], [9, 7, 108]) 
+or [{9, 1, 162}, {9, 7, 108}] or ...
+108 and 54 have the smallest difference of weights too, they also have 
+the smallest weights but they don't have the smallest ranks in the original string.
+..................
+
+closest("54 239382 162 254765 182 485944 468751 49780 108")
+closest should return  [[9, 0, 54], [9, 2, 162]] or ([9, 0, 54], [9, 2, 162])
+or [{9, 0, 54}, {9, 2, 162}] or ...
+
+*/
+
+/* My solution */
+const closest = str => {
+  if (str) {
+    /* Build objects */
+    const arr = str.split(" ");
+    const objs = arr.map((num, index) => {
+      const weight = num.split("").reduce((x, y) => Number(x) + Number(y));
+      return { index, num, weight };
+    });
+    
+    /* Execute task */
+    const byWeight = (x, y) => x.weight - y.weight;
+    const sortedArr = objs.sort(byWeight);
+    let minDiff = sortedArr[1].weight - sortedArr[0].weight;
+    let smallestObj = sortedArr[0];
+    let nextSmallestObj = sortedArr[1];
+    sortedArr.forEach((obj, index) => {
+      const nextObj = sortedArr[index + 1];
+      if (nextObj) { /* nextObj will be undefined for the last element in sortedArr */
+        const diff = nextObj.weight - obj.weight;
+        if (diff < minDiff) {
+          minDiff = diff;
+          if (diff === 0) {
+            if (obj.index < nextObj.index) {
+              smallestObj = obj;
+              nextSmallestObj = nextObj;
+            } else {
+              smallestObj = nextObj;
+              nextSmallestObj = obj;
+            };
+          } else {
+            smallestObj = obj;
+            nextSmallestObj = nextObj;
+          };
+        } else if (diff === minDiff) {
+          if (diff === 0) {
+            if (obj.index < nextObj.index) {
+              smallestObj = obj;
+              nextSmallestObj = nextObj;
+            } else {
+              smallestObj = nextObj;
+              nextSmallestObj = obj;
+            };
+          } else {
+            smallestObj = obj;
+            nextSmallestObj = nextObj;
+          };
+        };
+      };
+    });
+
+    console.log(smallestObj, nextSmallestObj);
+
+    return [
+      [smallestObj.weight, smallestObj.index, Number(smallestObj.num)],
+      [nextSmallestObj.weight, nextSmallestObj.index, Number(nextSmallestObj.num)]
+    ];
+  } else return [];
+};
+
+const newLine = "\n";
+
+console.log(
+  newLine +
+  closest("") + newLine,
+  // closest("456899 50 11992 176 272293 163 389128 96 290193 85 52") + newLine,
+  // closest("239382 162 254765 182 485944 134 468751 62 49780 108 54") + newLine,
+  closest("241259 154 155206 194 180502 147 300751 200 406683 37 57") + newLine,
+  // closest("89998 187 126159 175 338292 89 39962 145 394230 167 1") + newLine,
+  // closest("462835 148 467467 128 183193 139 220167 116 263183 41 52") + newLine,
+  // closest("403749 18 278325 97 304194 119 58359 165 144403 128 38") + newLine,
+  // closest("28706 196 419018 130 49183 124 421208 174 404307 60 24") + newLine,
+  // closest("189437 110 263080 175 55764 13 257647 53 486111 27 66") + newLine,
+  // closest("79257 160 44641 146 386224 147 313622 117 259947 155 58") + newLine,
+  // closest("315411 165 53195 87 318638 107 416122 121 375312 193 59")
+);
