@@ -1504,77 +1504,47 @@ or [{9, 0, 54}, {9, 2, 162}] or ...
 
 /* My solution */
 const closest = str => {
+  let result = [];
   if (str) {
+    
     /* Build objects */
     const arr = str.split(" ");
     const objs = arr.map((num, index) => {
-      const weight = num.split("").reduce((x, y) => Number(x) + Number(y));
+      let weight = num.split("").reduce((x, y) => Number(x) + Number(y));
+      weight = Number(weight);
+      num = Number(num);
       return { index, num, weight };
     });
+    const byWeightAndIndex = (x, y) => {
+      const weightDiff = x.weight - y.weight;
+      if (weightDiff !== 0) return weightDiff;
+      else return x.index - y.index;
+    };
     
+    /* Define task keys */
+    const sortedObjs = objs.sort(byWeightAndIndex);
+    let minDiff = sortedObjs[1].weight - sortedObjs[0].weight;
+    let smallestObj = sortedObjs[0];
+    let nextSmallestObj = sortedObjs[1];
+
     /* Execute task */
-    const byWeight = (x, y) => x.weight - y.weight;
-    const sortedArr = objs.sort(byWeight);
-    let minDiff = sortedArr[1].weight - sortedArr[0].weight;
-    let smallestObj = sortedArr[0];
-    let nextSmallestObj = sortedArr[1];
-    sortedArr.forEach((obj, index) => {
-      const nextObj = sortedArr[index + 1];
-      if (nextObj) { /* nextObj will be undefined for the last element in sortedArr */
+    sortedObjs.forEach((obj, index) => {
+      const nextObj = sortedObjs[index + 1];
+      if (nextObj) { /* nextObj will be undefined for the last element in sortedObjs */
         const diff = nextObj.weight - obj.weight;
         if (diff < minDiff) {
           minDiff = diff;
-          if (diff === 0) {
-            if (obj.index < nextObj.index) {
-              smallestObj = obj;
-              nextSmallestObj = nextObj;
-            } else {
-              smallestObj = nextObj;
-              nextSmallestObj = obj;
-            };
-          } else {
-            smallestObj = obj;
-            nextSmallestObj = nextObj;
-          };
-        } else if (diff === minDiff) {
-          if (diff === 0) {
-            if (obj.index < nextObj.index) {
-              smallestObj = obj;
-              nextSmallestObj = nextObj;
-            } else {
-              smallestObj = nextObj;
-              nextSmallestObj = obj;
-            };
-          } else {
-            smallestObj = obj;
-            nextSmallestObj = nextObj;
-          };
+          smallestObj = obj;
+          nextSmallestObj = nextObj;
         };
       };
     });
 
-    console.log(smallestObj, nextSmallestObj);
-
-    return [
-      [smallestObj.weight, smallestObj.index, Number(smallestObj.num)],
-      [nextSmallestObj.weight, nextSmallestObj.index, Number(nextSmallestObj.num)]
+    /* Package and ship result */
+    result = [
+      [smallestObj.weight, smallestObj.index, smallestObj.num],
+      [nextSmallestObj.weight, nextSmallestObj.index, nextSmallestObj.num]
     ];
-  } else return [];
+  }
+  return result;
 };
-
-const newLine = "\n";
-
-console.log(
-  newLine +
-  closest("") + newLine,
-  // closest("456899 50 11992 176 272293 163 389128 96 290193 85 52") + newLine,
-  // closest("239382 162 254765 182 485944 134 468751 62 49780 108 54") + newLine,
-  closest("241259 154 155206 194 180502 147 300751 200 406683 37 57") + newLine,
-  // closest("89998 187 126159 175 338292 89 39962 145 394230 167 1") + newLine,
-  // closest("462835 148 467467 128 183193 139 220167 116 263183 41 52") + newLine,
-  // closest("403749 18 278325 97 304194 119 58359 165 144403 128 38") + newLine,
-  // closest("28706 196 419018 130 49183 124 421208 174 404307 60 24") + newLine,
-  // closest("189437 110 263080 175 55764 13 257647 53 486111 27 66") + newLine,
-  // closest("79257 160 44641 146 386224 147 313622 117 259947 155 58") + newLine,
-  // closest("315411 165 53195 87 318638 107 416122 121 375312 193 59")
-);
