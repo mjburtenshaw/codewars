@@ -1548,3 +1548,45 @@ const closest = str => {
   }
   return result;
 };
+
+/* 42. Battle ships: Sunk damaged or not touched? */
+
+/* My solution */
+
+const damagedOrSunk = (board, attacks) => {
+
+  /* Find battleships on the board */
+  let battleships = {};
+  board.forEach(row => row.forEach(sector => {
+    sector = {
+      isOccupied: sector !== 0,
+      occupyingBattleship: sector !== 0 ? sector : null
+    };
+    if (sector.isOccupied && !battleships[sector.occupyingBattleship]) battleships[sector.occupyingBattleship] = {
+      isHit: false,
+      isSunk: false
+    };
+  }));
+
+};
+
+const newLine = "\n";
+
+// Game 1
+const board = [ [0, 0, 1, 0],
+                [0, 0, 1, 0],
+                [0, 0, 1, 0] ];
+          
+const attacks = [[3, 1], [3, 2], [3, 3]];
+const result = damagedOrSunk(board, attacks);
+
+// // Game 2
+// const board = [ [3, 0, 1],
+// [3, 0, 1],
+// [0, 2, 1], 
+// [0, 2, 0] ];
+
+// const attacks = [[2, 1], [2, 2], [ 3, 2], [3, 3]];
+// const result = damagedOrSunk(board, attacks);
+
+console.log(result);
