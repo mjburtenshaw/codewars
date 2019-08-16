@@ -1555,38 +1555,48 @@ const closest = str => {
 
 const damagedOrSunk = (board, attacks) => {
 
-  /* Find battleships on the board */
+  /* Survey the battlefield */
   let battleships = {};
-  board.forEach(row => row.forEach(sector => {
+  board = board.map(row => row.map(sector => {
     sector = {
       isOccupied: sector !== 0,
       occupyingBattleship: sector !== 0 ? sector : null
     };
-    if (sector.isOccupied && !battleships[sector.occupyingBattleship]) battleships[sector.occupyingBattleship] = {
-      isHit: false,
-      isSunk: false
+    if (sector.isOccupied) {
+      if (battleships[sector.occupyingBattleship]) battleships[sector.occupyingBattleship].size++;
+      else battleships[sector.occupyingBattleship] = {
+        isHit: false,
+        isSunk: false,
+        numHits: 0,
+        size: 1
+      };
     };
+    return sector;
   }));
 
+  /* Battle */
+  attacks.forEach(coordinates => {
+    const xCoord = coordinates[0] - 1;
+    const yCoord = board.length - coordinates[1];
+    const sector = board[yCoord][xCoord];
+    if (sector.isOccupied) {
+      const battleship = battleships[sector.occupyingBattleship];
+      battleship.numHits++;
+      battleship.isHit = true;
+      if (battleship.size === battleship.numHits) battleship.isSunk = true;
+      battleships[sector.occupyingBattleship] = battleship;
+    };
+  });
+
+  /* Debrief */
+  let analysis = { sunk: 0, damaged: 0, notTouched: 0, points: 0 };
+  Object.entries(battleships).forEach(battleship => {
+    const ship = battleship[1];
+    if (ship.isSunk) analysis.sunk++;
+    else if (ship.isHit) analysis.damaged++;
+    else analysis.notTouched++;
+  });
+  analysis.points = analysis.sunk + (analysis.damaged / 2) - analysis.notTouched;
+
+  return analysis;
 };
-
-const newLine = "\n";
-
-// Game 1
-const board = [ [0, 0, 1, 0],
-                [0, 0, 1, 0],
-                [0, 0, 1, 0] ];
-          
-const attacks = [[3, 1], [3, 2], [3, 3]];
-const result = damagedOrSunk(board, attacks);
-
-// // Game 2
-// const board = [ [3, 0, 1],
-// [3, 0, 1],
-// [0, 2, 1], 
-// [0, 2, 0] ];
-
-// const attacks = [[2, 1], [2, 2], [ 3, 2], [3, 3]];
-// const result = damagedOrSunk(board, attacks);
-
-console.log(result);
