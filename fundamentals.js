@@ -1600,3 +1600,64 @@ const damagedOrSunk = (board, attacks) => {
 
   return analysis;
 };
+
+/*
+
+43. Advanced Pig Latin
+
+Pig latin is created by taking all the consonants before the first vowel of a word and moving them to the back of the word followed by the letters "ay".
+
+"hello" => "ellohay"
+"creating" => "eatingcray"
+If the first letter of the word is a vowel, the string is left the same and the letters "way" are appended to the end.
+
+"algorithm" => "algorithmway"
+This problem is different from other variations in that it expects casing to remain the same so:
+
+"Hello World" => "Ellohay Orldway"
+as well as punctuation.
+
+"Pizza? Yes please!" => "Izzapay? Esyay easeplay!"
+Your job is to take a string and translate it to Pig Latin. The string will never be undefined but may contain both numbers and letters. A word will never be a combination of numbers and letters. Also, there will never be punctuation at the beginning of a word and the only capital letter in a word will be the first letter meaning there are zero all capitalized words.
+
+*/
+
+/* My solution */
+const translate = sentence => {
+
+  /* Define keys */
+  const capital = /[A-Z]/;
+  const vowel = /[aeiou]/i;
+  const punctuation = /\W/;
+  let translatedSentence = [];
+  sentence.split(" ").forEach(word => {
+    let translatedWord = [];
+    let suffix;
+    let reachedFirstVowel = false;
+    const firstCharWasCapitalized = capital.test(word.charAt(0));
+
+    /* Perform task */
+    word.split("").forEach((char, index) => {
+      if (!reachedFirstVowel) {
+        if (vowel.test(char)) {
+          reachedFirstVowel = true;
+          if (firstCharWasCapitalized) translatedWord.push(char.toUpperCase());
+          else translatedWord.push(char.toLowerCase());
+          if (index === 0) suffix = "way";
+          else suffix += "ay";
+        } else {
+          if (suffix) suffix += char.toLowerCase();
+          else suffix = char.toLowerCase();
+        };
+      } else {
+        if (punctuation.test(char)) suffix += char;
+        else translatedWord.push(char);
+      };
+    });
+    translatedWord.push(suffix);
+    translatedSentence.push(translatedWord.join(""));
+  });
+
+  /* Package and ship */
+  return translatedSentence.join(" ");
+};
