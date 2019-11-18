@@ -1698,37 +1698,54 @@ const alphabetWar = battlefield => {
   const nuclearStrike = '#';
   const shelterLeft = '[';
   const shelterRight = ']';
-  if (!battlefield.includes(nuclearStrike)) return battlefield.replace(/[[\]]/g, '');
+  const allLetters = battlefield.replace(/[[\]]/g, '');
+  const noNuclearStrikesOnBattlefield = !battlefield.includes(nuclearStrike);
+  let survivors = '';
+  if (noNuclearStrikesOnBattlefield) survivors = allLetters;
   else {
     const map = battlefield.split('');
     let shelters = [];
-    let shelterSector = undefined;
+    let sectorWest = 0;
+
+    /* Locate all of the shelters */
     map.forEach((obj, sector) => {
-      if (obj === shelterLeft) shelterSector = sector + 1;
+      const lastShelter = shelters[shelters.length - 1];
+      if (obj === shelterLeft) sectorWest = sector + 1;
       if (obj === shelterRight) {
-        shelters.push(battlefield.substring(shelterSector, sector));
-        shelterSector = undefined;
+        const sectorEast = sector;
+        const lastShelterSectionEast = lastShelter ? lastShelter.sectorEast + 1 : 0;
+        const inhabitants = battlefield.substring(sectorWest, sectorEast);
+        let surroundings = '';
+
+        /* Identify surroundings to the West of the shelter */
+        let surroundingsWest = battlefield.substring(lastShelterSectionEast, sectorWest - 1);
+        if (surroundingsWest !== shelterLeft) surroundings += surroundingsWest;
+
+        /* Identify surroundings to the East of the shelter */
+        let nextShelterWest = map.length;
+        for (let sctr = sector; sctr < map.length; sctr++) if (map[sctr] === shelterLeft) {
+          nextShelterWest = sctr;
+          break;
+        };
+        surroundings += battlefield.substring(sectorEast + 1, nextShelterWest);
+
+        const shelter = { inhabitants, sectorWest, sectorEast, surroundings };
+        shelters.push(shelter);
+        
+        let inhabitantsSurvived = true;
+        let numNuclearStrikesNearby = 0;
+        const mapOfSurroundings = surroundings.split('');
+        for (let sctr of mapOfSurroundings) if (sctr === nuclearStrike) {
+          numNuclearStrikesNearby++;
+          if (numNuclearStrikesNearby === 2) {
+            inhabitantsSurvived = false;
+            break;
+          };
+        };
+
+        if (inhabitantsSurvived) survivors += inhabitants;
       };
     });
-    console.log(shelters);
   };
+  return survivors;
 };
-
-const newLine = '\n';
-console.log(
-  newLine,
-  alphabetWar('abde[fgh]ijk') + newLine,
-  alphabetWar('ab#de[fgh]ijk') + newLine,
-  alphabetWar('ab#de[fgh]ij#k') + newLine,
-  alphabetWar('##abde[fgh]ijk') + newLine,
-  alphabetWar('##abde[fgh]') + newLine,
-  alphabetWar('##abcde[fgh]') + newLine,
-  alphabetWar('abcde[fgh]') + newLine,
-  alphabetWar('##abde[fgh]ijk[mn]op') + newLine,
-  alphabetWar('#abde[fgh]i#jk[mn]op') + newLine,
-  alphabetWar('[ab]adfd[dd]##[abe]dedf[ijk]d#d[h]#') + newLine,
-  alphabetWar('[a]#[b]#[c]') + newLine,
-  alphabetWar('[a]#b#[c][d]') + newLine,
-  alphabetWar('[a][b][c]') + newLine,
-  alphabetWar('##a[a]b[c]#')
-);
