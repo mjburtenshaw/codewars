@@ -1749,3 +1749,178 @@ const alphabetWar = battlefield => {
   };
   return survivors;
 };
+
+/*
+
+45. Alphabet war - Wo lo loooooo priests join the war
+
+Introduction
+
+There is a war and nobody knows - the alphabet war!
+There are two groups of hostile letters. The tension between left side letters and right side letters was too high and the war began. The letters have discovered a new unit - a priest with Wo lo looooooo power.
+
+
+Task
+
+Write a function that accepts fight string consists of only small letters and return who wins the fight. When the left side wins return Left side wins!, when the right side wins return Right side wins!, in other case return Let's fight again!.
+
+The left side letters and their power:
+
+ w - 4
+ p - 3 
+ b - 2
+ s - 1
+ t - 0 (but it's priest with Wo lo loooooooo power)
+The right side letters and their power:
+
+ m - 4
+ q - 3 
+ d - 2
+ z - 1
+ j - 0 (but it's priest with Wo lo loooooooo power)
+The other letters don't have power and are only victims.
+The priest units t and j change the adjacent letters from hostile letters to friendly letters with the same power.
+
+mtq => wtp
+wjs => mjz
+A letter with adjacent letters j and t is not converted i.e.:
+
+tmj => tmj
+jzt => jzt
+The priests (j and t) do not convert the other priests ( jt => jt).
+
+alphabetWar("z")         //=>  "z"  => "Right side wins!"
+alphabetWar("tz")        //=>  "ts" => "Left side wins!" 
+alphabetWar("jz")        //=>  "jz" => "Right side wins!" 
+alphabetWar("zt")        //=>  "st" => "Left side wins!" 
+alphabetWar("azt")       //=> "ast" => "Left side wins!"
+alphabetWar("tzj")       //=> "tzj" => "Right side wins!" 
+
+*/
+
+const alphabetWar = fight => {
+
+  /* Take Inventory */
+  const battlefield = fight.split('');
+  const factions = {
+    left: {
+      power: 0,
+      units: {
+        w: { type: 'warrior', power: 4 },
+        p: { type: 'warrior', power: 3 },
+        b: { type: 'warrior', power: 2 },
+        s: { type: 'warrior', power: 1 },
+        t: { type: 'priest' , power: 0 }
+      }
+    },
+    right: {
+      power: 0,
+      units: {
+        m: { type: 'warrior', power: 4 },
+        q: { type: 'warrior', power: 3 },
+        d: { type: 'warrior', power: 2 },
+        z: { type: 'warrior', power: 1 },
+        j: { type: 'priest' , power: 0 }
+      }
+    }
+  };
+  const WOLOOLOOOO = params => {
+    const { letter, currentFaction, newFaction } = params;
+    const letterPower = factions[currentFaction].units[letter].power;
+    let newAssignment;
+    Object.entries(factions[newFaction].units).forEach(unit => {
+      const unitTitle = unit[0];
+      const unitInfo = unit[1];
+      if (unitInfo.power === letterPower) newAssignment = unitTitle;
+    });
+    return newAssignment;
+  };
+
+  /* BONUS: Determine pre-conversion Faction Power */
+  battlefield.forEach(letter => {
+    const letterFaction = factions.left.units[letter] ? 'left' : factions.right.units[letter] ? 'right' : 'none';
+    if (letterFaction !== 'none') {
+      const letterPower = factions[letterFaction].units[letter].power;
+      factions[letterFaction].power += letterPower;
+    };
+  });
+
+  /* BONUS: Determine result of the fight before conversion */
+  let preConversionResult = '';
+  let preConversionLosingFaction;
+  if (factions.left.power === factions.right.power) preConversionResult = "Let's fight again!";
+  if (factions.left.power > factions.right.power) {
+    preConversionResult = 'Left side wins!';
+    preConversionLosingFaction = 'Right';
+  };
+  if (factions.left.power < factions.right.power) {
+    preConversionResult = 'Right side wins!';
+    preConversionLosingFaction = 'Left';
+  };
+  factions.left.power = 0;
+  factions.right.power = 0;
+
+  /* Priests Convert to their Factions before the fighting begins */
+  battlefield.forEach((letter, letterPosition) => {
+    let letterToLeft                  = fight.charAt(letterPosition - 1);
+    let letterToRight                 = fight.charAt(letterPosition + 1);
+    const letterTwoToLeft             = fight.charAt(letterPosition - 2);
+    const letterTwoToRight            = fight.charAt(letterPosition + 2);
+    const letterFaction               = factions.left.units[letter]        ? 'left' : factions.right.units[letter]        ? 'right' : 'none';
+    const letterToLeftFaction         = factions.left.units[letterToLeft]  ? 'left' : factions.right.units[letterToLeft]  ? 'right' : 'none';
+    const letterToRightFaction        = factions.left.units[letterToRight] ? 'left' : factions.right.units[letterToRight] ? 'right' : 'none';
+    const letterIsPriest              = letter           === 't' || letter           === 'j';
+    const letterTwoToLeftIsPriest     = letterTwoToLeft  === 't' || letterTwoToLeft  === 'j';
+    const letterTwoToRightIsPriest    = letterTwoToRight === 't' || letterTwoToRight === 'j';
+    const letterToLeftIsNotPriest     = letterToLeft     !== 't' && letterToLeft     !== 'j';
+    const letterToRightIsNotPriest    = letterToRight    !== 't' && letterToRight    !== 'j';
+    const letterTwoToLeftIsNotPriest  = letterTwoToLeft  !== 't' && letterTwoToLeft  !== 'j';
+    const letterTwoToRightIsNotPriest = letterTwoToRight !== 't' && letterTwoToRight !== 'j';
+    const priestToLeftIsNotEnemy      = letterTwoToLeft  === letter;
+    const priestToRightIsNotEnemy     = letterTwoToRight === letter;
+    const letterToLeftIsEnemy         = letterToLeftFaction  !== 'none' && letterToLeftFaction  !== letterFaction;
+    const letterToRightIsEnemy        = letterToRightFaction !== 'none' && letterToRightFaction !== letterFaction;
+    if (letterIsPriest) {
+      if (letterToLeft && letterToLeftIsNotPriest) {
+        if (letterTwoToLeftIsNotPriest || (letterTwoToLeftIsPriest && priestToLeftIsNotEnemy)) {
+          if (letterToLeftIsEnemy) battlefield[letterPosition - 1] = WOLOOLOOOO({ letter: letterToLeft, currentFaction: letterToLeftFaction, newFaction: letterFaction });
+        };
+      };
+      if (letterToRight && letterToRightIsNotPriest) {
+        if (letterTwoToRightIsNotPriest || (letterTwoToRightIsPriest && priestToRightIsNotEnemy)) {
+          if (letterToRightIsEnemy) battlefield[letterPosition + 1] = WOLOOLOOOO({ letter: letterToRight, currentFaction: letterToRightFaction, newFaction: letterFaction });
+        };
+      };
+    };
+  });
+
+  /* Determine post-conversion Faction Power */
+  battlefield.forEach(letter => {
+    const letterFaction = factions.left.units[letter] ? 'left' : factions.right.units[letter] ? 'right' : 'none';
+    if (letterFaction !== 'none') {
+      const letterPower = factions[letterFaction].units[letter].power;
+      factions[letterFaction].power += letterPower;
+    };
+  });
+
+  /* Determine result of the fight */
+  let postConversionResult = '';
+  let postConversionWinningFaction;
+  if (factions.left.power === factions.right.power) postConversionResult = "Let's fight again!";
+  if (factions.left.power > factions.right.power) {
+    postConversionResult = 'Left side wins!';
+    postConversionWinningFaction = 'Left';
+  };
+  if (factions.left.power < factions.right.power) {
+    postConversionResult = 'Right side wins!';
+    postConversionWinningFaction = 'Right';
+  };
+
+  /* BONUS: Determine if the priests of the winning side made the difference! */
+  let priestValue = preConversionResult === postConversionResult ? `The warriors of The ${postConversionWinningFaction} were victorious by virtue of their strength!` : `God be praised! The priests of The ${postConversionWinningFaction} helped us win the battle!`;
+  if (!postConversionWinningFaction && preConversionLosingFaction) priestValue = `God has been merciful. The priests of The ${preConversionLosingFaction} have prevented a total loss.`;
+  if (!postConversionWinningFaction && !preConversionLosingFaction) priestValue = `It appears that the warriors & priests of each faction were equally matched in strength & fervor.`;
+  console.log(priestValue);
+
+  return postConversionResult;
+};
